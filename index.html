@@ -93,7 +93,7 @@ footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid va
           <li>Cron expression parser</li><li>Diff checker</li><li>Hash generator (MD5, SHA)</li>
           <li>Priority support</li>
         </ul>
-        <button class="btn btn-primary" style="width:100%" onclick="handleUpgrade()">Upgrade to Pro →</button>
+        <button class="btn btn-primary" style="width:100%" onclick="handleUpgrade()">Upgrade to Pro →</button><p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem">1-min Stripe setup. Open devtools to configure.</p>
       </div>
     </div>
   </section>
@@ -225,13 +225,16 @@ function escapeHTML(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').repla
 // ---- Upgrade flow ----
 function showUpgradePrompt(){toast('🔒 Upgrade to Pro to use this tool');showPricing()}
 function handleUpgrade(){
-  // REPLACE THIS URL with your Stripe Payment Link:
-  // 1. Go to https://dashboard.stripe.com/payment-links
-  // 2. Create a new Payment Link for $9/month
-  // 3. Copy the URL and paste it below
+  // STRIPE: Replace with your Payment Link from https://dashboard.stripe.com/payment-links
   var stripePaymentLink = 'https://buy.stripe.com/PLACEHOLDER';
-  window.open(stripePaymentLink,'_blank');
-  toast('Redirecting to secure checkout...');
+  if (stripePaymentLink.indexOf('PLACEHOLDER') === -1) {
+    window.open(stripePaymentLink,'_blank');
+    toast('Redirecting to secure Stripe checkout...');
+  } else {
+    // Fallback: Ko-fi donation page
+    window.open('https://ko-fi.com/YOUR_KOFI','_blank');
+    toast('Stripe not configured. Opening donation page...');
+  }
 }
 function showPricing(){document.getElementById('pricing').scrollIntoView({behavior:'smooth'})}
 
